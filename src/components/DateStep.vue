@@ -1,6 +1,10 @@
 <template>
   <v-row>
-    <v-date-picker v-model="dates" range></v-date-picker>
+    <v-date-picker
+      :allowed-dates="allowedDates"
+      v-model="dates"
+      range
+    ></v-date-picker>
   </v-row>
 </template>
 
@@ -8,7 +12,13 @@
 import { mapMutations } from "vuex";
 export default {
   name: "DateStep",
-  methods: mapMutations(["selectCheckInDate", "selectCheckOutDate"]),
+  methods: {
+    allowedDates: (val) => {
+      const currentDate = new Date().toISOString().split("T")[0];
+      return val > currentDate;
+    },
+    ...mapMutations(["selectCheckInDate", "selectCheckOutDate"]),
+  },
   computed: {
     dates: {
       get() {
@@ -18,8 +28,10 @@ export default {
         ].filter(Boolean);
       },
       set(value) {
-        this.selectCheckInDate(value[0]);
-        this.selectCheckOutDate(value[1]);
+        const checkIn = value[0] > value[1] ? value[1] : value[0];
+        const checkOut = value[0] > value[1] ? value[0] : value[1];
+        this.selectCheckInDate(checkIn);
+        this.selectCheckOutDate(checkOut);
       },
     },
   },

@@ -20,7 +20,7 @@ const defaultState = {
   },
 };
 
-const savedState = getObject("state");
+const savedState = getObject("accommodation_case_state");
 
 export const initialState = { ...defaultState, ...savedState };
 

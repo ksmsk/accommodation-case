@@ -133,7 +133,7 @@ export default {
     state: {
       deep: true,
       handler(value) {
-        setObject("state", value);
+        setObject("accommodation_case_state", value);
       },
     },
   },
